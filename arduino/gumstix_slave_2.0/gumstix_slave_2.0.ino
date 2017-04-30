@@ -17,7 +17,7 @@
 
 #define I2C_SLAVE_ADDRESS 0x10  // Set Arduino's address on I2C bus
 
-Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(); // default address (0x40)
+Adafruit_PWMServoDriver pwm = Adafruit_PWMServoDriver(0x40); // default address (0x40)
 
 uint8_t BlueArmLeft = 10;  
 uint8_t BlueArmRight = 9; 
@@ -38,17 +38,20 @@ uint8_t RedArmRight = 7;
 
     int pulseLeft = map(leftAngle, 0, 180, SERVOMIN, SERVOMAX);
     int pulseRight = map(rightAngle, 0, 180, SERVOMIN, SERVOMAX);
+
+    Serial.println("R/x data");
       
     if (player_id == 1) 
     {
       pwm.setPWM(BlueArmLeft, 0, pulseLeft);
-      pwm.setPWM(BlueArmRight, 0, pulseRight);
+      //pwm.setPWM(BlueArmRight, 0, pulseRight);
     } 
     else 
     { 
-      pwm.setPWM(RedArmLeft, 0, pulseLeft);
-      pwm.setPWM(RedArmRight, 0, pulseRight);
+      //pwm.setPWM(RedArmLeft, 0, pulseLeft);
+      //pwm.setPWM(RedArmRight, 0, pulseRight);
     }
+    yield();
   } 
   else 
   {
@@ -70,6 +73,7 @@ void begin_i2c()
 
 void setup() {
   begin_i2c();
+  Serial.begin(9600);
   pwm.begin();
   pwm.setPWMFreq(60);  // Analog servos run at ~60 Hz updates
   yield();

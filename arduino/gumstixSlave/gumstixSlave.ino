@@ -32,6 +32,8 @@ void onRecieveHandler(int numBytes)
       int player_id = Wire.read();      // receive byte as an integer  (arm number to move)
       int leftAngle = Wire.read();      // receive byte as an integer  (left arm position)
       int rightAngle = Wire.read();     // receive byte as an integer  (right arm position)
+
+      Serial.println("Data R/x");
       
       if (player_id == 1) {
         BlueArmLeft.write(leftAngle);
@@ -56,6 +58,7 @@ void begin_i2c()
 {
     Wire.begin(I2C_SLAVE_ADDRESS);    // Connect Arduino to I2C bus at I2C_SLAVE_ADDRESS
     Wire.onReceive(onRecieveHandler); // Create callback function for receiving data
+    Serial.begin(9600);
 }
 
 
